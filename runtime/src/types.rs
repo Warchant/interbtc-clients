@@ -167,6 +167,8 @@ mod metadata_aliases {
     pub type EncodedCall = metadata::runtime_types::interlay_runtime_parachain::RuntimeCall;
     #[cfg(feature = "parachain-metadata-kintsugi")]
     pub type EncodedCall = metadata::runtime_types::kintsugi_runtime_parachain::RuntimeCall;
+    #[cfg(feature = "metadata-ggx-dev")]
+    pub type EncodedCall = metadata::runtime_types::ggxchain_runtime_brooklyn::RuntimeCall;
 
     pub type InterBtcHeader = <InterBtcRuntime as Config>::Header;
 

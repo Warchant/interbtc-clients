@@ -107,6 +107,10 @@ pub struct ConnectionOpts {
         feature = "parachain-metadata-interlay",
         clap(long, default_value = "wss://api.interlay.io:443/parachain")
     )]
+    #[cfg_attr(
+        feature = "metadata-ggx-dev",
+        clap(long, default_value = "ws://localhost:9944/parachain")  // TODO(Bohdan): review
+    )]
     pub btc_parachain_url: String,
 
     /// Timeout in milliseconds to wait for connection to btc-parachain.

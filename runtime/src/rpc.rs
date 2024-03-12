@@ -62,6 +62,10 @@ cfg_if::cfg_if! {
         const DEFAULT_SPEC_VERSION: Range<u32> = 1025000..1026000;
         pub const DEFAULT_SPEC_NAME: &str = "kintsugi-parachain";
         pub const SS58_PREFIX: u16 = 2092;
+    } else if #[cfg(feature = "metadata-ggx-dev")] {
+        const DEFAULT_SPEC_VERSION: Range<u32> = 1025000..1026000; // TODO(Bohdan): review
+        pub const DEFAULT_SPEC_NAME: &str = "ggx-dev";  // TODO(Bohdan): review
+        pub const SS58_PREFIX: u16 = 8886; // not(brooklyn)
     }
 }
 
@@ -838,7 +842,7 @@ impl CollateralBalancesPallet for InterBtcParachain {
                 .into_iter()
                 .map(|(amount, currency_id)| {
                     EncodedCall::Tokens(metadata::runtime_types::orml_tokens::module::Call::transfer {
-                        dest: recipient.clone(),
+                        dest: subxt::utils::MultiAddress::Id(recipient.clone()),
                         currency_id,
                         amount,
                     })
@@ -1923,7 +1927,7 @@ impl SudoPallet for InterBtcParachain {
                     .into_iter()
                     .map(|(recipient, free, reserved, currency_id)| {
                         EncodedCall::Tokens(metadata::runtime_types::orml_tokens::module::Call::set_balance {
-                            who: recipient,
+                            who: subxt::utils::MultiAddress::Id(recipient),
                             currency_id,
                             new_free: free,
                             new_reserved: reserved,
